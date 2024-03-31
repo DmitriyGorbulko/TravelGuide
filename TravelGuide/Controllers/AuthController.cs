@@ -51,5 +51,12 @@ namespace TravelGuide.Controllers
         {
             return Ok("good");
         }
+
+        [Route("/test_jwt")]
+        [HttpGet]
+        public async Task<IActionResult> TestJwt(string jwt)
+        {
+            return Ok(await _authRepository.VeritifyJwt(jwt));
+        }
     }
 }

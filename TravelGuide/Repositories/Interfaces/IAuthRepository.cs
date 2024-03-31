@@ -6,5 +6,6 @@ namespace TravelGuide.Repositories.Interfaces
     {
         Task<string> SignUp(User user);
         Task<string> SignIn(string email, string password);
+        Task<string> VeritifyJwt(string jwt);
     }
 }

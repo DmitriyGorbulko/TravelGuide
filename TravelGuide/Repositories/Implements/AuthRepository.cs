@@ -8,6 +8,7 @@ using TravelGuide.Entity;
 using TravelGuide.Repositories.Interfaces;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Configuration;
 
 namespace TravelGuide.Repositories.Implements
 {
@@ -103,7 +104,36 @@ namespace TravelGuide.Repositories.Implements
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
+        public async Task<string> VeritifyJwt(string jwt)
+        {
+            string signingKey = _configuration.GetSection("Jwt:Key").ToString();
+            string[] tokenParts = jwt.Split('.');
+            string header = DecodeBase64(tokenParts[0]);
+            string payload = DecodeBase64(tokenParts[1]);
+            string signature = tokenParts[2];
+            string expectedSignature = ComputeSignature(header + "." + payload, signingKey);
+            return signature + "    +    " + expectedSignature;
+        }
+
+        private string DecodeBase64(string base64)
+        {
+            string padded = base64 + new string('=', (4 - base64.Length % 4) % 4);
+            byte[] bytes = Convert.FromBase64String(padded);
+            return Encoding.UTF8.GetString(bytes);
+        }
+
+        private string ComputeSignature(string input, string key)
+        {
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+            using (HMACSHA256 hmac = new HMACSHA256(keyBytes))
+            {
+                byte[] hashBytes = hmac.ComputeHash(inputBytes);
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
         public SymmetricSecurityKey GetSymmetricSecurityKey() =>
-            new(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").ToString()));
+            new(Encoding.UTF8.GetBytes("mysupersecret_secretkey!123"));
     }
 }

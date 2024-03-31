@@ -4,35 +4,35 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TravelGuide.Middlewares
 {
-    public class AuthorizationOperationFilter : IOperationFilter
-    {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        public class AuthorizationOperationFilter : IOperationFilter
         {
-            var actionMetadata = context.ApiDescription.ActionDescriptor.EndpointMetadata;
-            var isAuthorized = actionMetadata.Any(metadataItem => metadataItem is AuthorizeAttribute);
-            var allowAnonymous = actionMetadata.Any(metadataItem => metadataItem is AllowAnonymousAttribute);
-            if (!isAuthorized || allowAnonymous)
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
             {
-                return;
-            }
-
-            operation.Parameters = new List<OpenApiParameter>();
-            operation.Security = new List<OpenApiSecurityRequirement>
-            {
-                new OpenApiSecurityRequirement
+                var actionMetadata = context.ApiDescription.ActionDescriptor.EndpointMetadata;
+                var isAuthorized = actionMetadata.Any(metadataItem => metadataItem is AuthorizeAttribute);
+                var allowAnonymous = actionMetadata.Any(metadataItem => metadataItem is AllowAnonymousAttribute);
+                if (!isAuthorized || allowAnonymous)
                 {
-                    {
-                        new OpenApiSecurityScheme{
-                        Reference = new OpenApiReference
-                        {
-                            Id = "Bearer",
-                            Type = ReferenceType.SecurityScheme
-                        }
-                        },
-                        Array.Empty<string>()
-                    }
+                    return;
                 }
-            };
-        }
+
+                operation.Parameters = new List<OpenApiParameter>();
+                operation.Security = new List<OpenApiSecurityRequirement>
+                {
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme{
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                            },
+                            Array.Empty<string>()
+                        }
+                    }
+                };
+            }
     }
 }
