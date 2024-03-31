@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,73 +7,30 @@ using System.Text;
 using TravelGuide;
 using TravelGuide.Middlewares;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<TravelGuideDbContext>((options) =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("TravelGuideDb")));
-
-// Add configuration from appsettings.json
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
- .AddEnvironmentVariables();
-
-builder.Services.AddAuthentication(options =>
+internal class Program
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
-{
-    o.TokenValidationParameters = new TokenValidationParameters
+    public static void Main(string[] args)
     {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true
-    };
-});
-builder.Services.AddAuthorization();
+        CreateHostBuilder(args).Build().Run();
+    }
 
-// 👇 Configuring the Authorization Service
-builder.Services.AddControllers();
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(builder =>
+            {
+                builder.AddJsonFile("appsettings.json", true);
+                builder.AddJsonFile("appsettings.Development.json", true);
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureKestrel(serverOptions =>
+                {
+                    long gb5 = 5L * 1024L * 1024L * 1024L;
+                    serverOptions.Limits.MaxRequestBodySize = gb5;
+                    serverOptions.Limits.MaxRequestBufferSize = gb5;
+                });
+            });
 
-builder.Services.AddRepositories();
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cafe", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-    });
-    c.OperationFilter<AuthorizationOperationFilter>();
-});
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-
-app.MapControllers();
-
-app.Run();

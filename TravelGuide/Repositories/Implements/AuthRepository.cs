@@ -49,7 +49,7 @@ namespace TravelGuide.Repositories.Implements
         private string CreatePasswordHash(string password)
         {
             var encoding = new System.Text.ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes("mypsswd");
+            byte[] keyByte = encoding.GetBytes(AuthOptions.KEY);
             byte[] messageBytes = encoding.GetBytes(password);
             using (var hmacsha512 = new HMACSHA512(keyByte))
             {
@@ -95,8 +95,8 @@ namespace TravelGuide.Repositories.Implements
                 new Claim(ClaimTypes.Role, user.Role)
             };
             var jwt = new JwtSecurityToken(
-                    issuer: _configuration.GetSection("Jwt:Issuer").ToString(),
-                    audience: _configuration.GetSection("Jwt:Audience").ToString(),
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
             claims: claims,
                     expires: DateTime.UtcNow.AddMinutes(ExpirationMinutes), 
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
@@ -106,7 +106,7 @@ namespace TravelGuide.Repositories.Implements
 
         public async Task<string> VeritifyJwt(string jwt)
         {
-            string signingKey = _configuration.GetSection("Jwt:Key").ToString();
+            string signingKey = AuthOptions.KEY;
             string[] tokenParts = jwt.Split('.');
             string header = DecodeBase64(tokenParts[0]);
             string payload = DecodeBase64(tokenParts[1]);
@@ -134,6 +134,6 @@ namespace TravelGuide.Repositories.Implements
         }
 
         public SymmetricSecurityKey GetSymmetricSecurityKey() =>
-            new(Encoding.UTF8.GetBytes("mysupersecret_secretkey!123"));
+            new(Encoding.UTF8.GetBytes(AuthOptions.KEY));
     }
 }
