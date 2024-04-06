@@ -25,17 +25,17 @@ namespace TravelGuide.Repositories.Implements
 
         public async Task<string> SignUp(User user)
         {
-            var isUserExists = await IsUserExists(user.Email);
+           /* var isUserExists = await IsUserExists(user.Email);
             if (isUserExists) return "User already exists";
 
-            user.Password = CreatePasswordHash(user.Password);
+            user.Password = CreatePasswordHash(user.Password);*/
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return "User created";
         }
 
-        public async Task<string> SignIn(string email, string password)
+   /*     public async Task<string> SignIn(string email, string password)
         {
             if (await VerifyUser(email, password))
             {
@@ -44,9 +44,9 @@ namespace TravelGuide.Repositories.Implements
                 return token;
             }
             return "Data isn't correct";
-        }
+        }*/
 
-        private string CreatePasswordHash(string password)
+/*        private string CreatePasswordHash(string password)
         {
             var encoding = new System.Text.ASCIIEncoding();
             byte[] keyByte = encoding.GetBytes(AuthOptions.KEY);
@@ -56,40 +56,25 @@ namespace TravelGuide.Repositories.Implements
                 byte[] hashmessage = hmacsha512.ComputeHash(messageBytes);
                 return Convert.ToBase64String(hashmessage);
             }
-        }
+        }*/
 
-        private async Task<User?> GetUser(string email)
+        public async Task<User?> GetUser(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower().Trim() == email.ToLower().Trim());
         }
         
-        private async Task<bool> IsUserExists(string email)
+        public async Task<bool> IsUserExists(string email)
         {
             return await _context.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower());
         }
 
-            
-        private async Task<bool> VerifyUser(string email, string password)
-        {
-            var user = await GetUser(email);
-            if (user == null)
-                return false;
 
-            var passwordHash = CreatePasswordHash(password);
 
-            if (user.Password == passwordHash)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private string CreateToken(User user)
+/*        private string CreateToken(User user)
         {
             const int ExpirationMinutes = 365; 
 
-            /*var role = await _context.Roles.FindAsync(person.RoleId);*/
+            *//*var role = await _context.Roles.FindAsync(person.RoleId);*//*
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role)
@@ -102,9 +87,9 @@ namespace TravelGuide.Repositories.Implements
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
-        }
+        }*/
 
-        public async Task<string> VeritifyJwt(string jwt)
+       /* public async Task<string> VeritifyJwt(string jwt)
         {
             string signingKey = AuthOptions.KEY;
             string[] tokenParts = jwt.Split('.');
@@ -131,9 +116,9 @@ namespace TravelGuide.Repositories.Implements
                 byte[] hashBytes = hmac.ComputeHash(inputBytes);
                 return Convert.ToBase64String(hashBytes);
             }
-        }
+        }*/
 
-        public SymmetricSecurityKey GetSymmetricSecurityKey() =>
-            new(Encoding.UTF8.GetBytes(AuthOptions.KEY));
+/*        public SymmetricSecurityKey GetSymmetricSecurityKey() =>
+            new(Encoding.UTF8.GetBytes(AuthOptions.KEY));*/
     }
 }

@@ -78,6 +78,7 @@ namespace TravelGuide
             services.AddControllers();
 
             services.AddRepositories();
+            services.AddServices();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

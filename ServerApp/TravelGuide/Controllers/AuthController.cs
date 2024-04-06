@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using TravelGuide.Entity;
 using TravelGuide.Repositories.Interfaces;
+using TravelGuide.Services.Interfaces;
 
 namespace TravelGuide.Controllers
 {
@@ -16,25 +17,25 @@ namespace TravelGuide.Controllers
     public class AuthController : ControllerBase
     {
 
-        private readonly IAuthRepository _authRepository;
+        private readonly IAuthService _authService;
 
-        public AuthController(IAuthRepository authRepository)
+        public AuthController(IAuthService authService)
         {
-            _authRepository = authRepository;
+            _authService = authService;
         }
 
         [Route("/sign_up")]
         [HttpPost]
         public async Task<IActionResult> SignUp(User user)
         {
-            return Ok(await _authRepository.SignUp(user));
+            return Ok(await _authService.SignUp(user));
         }
 
         [Route("/sign_in")]
         [HttpPost]
         public async Task<IActionResult> SignIn(string email, string password)
         {
-            return Ok(await _authRepository.SignIn(email, password));
+            return Ok(await _authService.SignIn(email, password));
         }
 
         [Route("/test_anonimous")]
@@ -52,11 +53,11 @@ namespace TravelGuide.Controllers
             return Ok("good");
         }
 
-        [Route("/test_jwt")]
+        /*[Route("/test_jwt")]
         [HttpGet]
         public async Task<IActionResult> TestJwt(string jwt)
         {
-            return Ok(await _authRepository.VeritifyJwt(jwt));
-        }
+            return Ok(await _authService.VeritifyJwt(jwt));
+        }*/
     }
 }
