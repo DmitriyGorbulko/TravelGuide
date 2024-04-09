@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using TravelGuide.Middlewares;
+using TravelGuide.Api.Middlewares;
+using TravelGuide.Db;
+using TravelGuide.Utilites;
 
-namespace TravelGuide
+namespace TravelGuide.Api
 {
     public class Startup
     {

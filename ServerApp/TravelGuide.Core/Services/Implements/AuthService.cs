@@ -3,11 +3,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using TravelGuide.Entity;
-using TravelGuide.Repositories.Interfaces;
-using TravelGuide.Services.Interfaces;
+using TravelGuide.Core.Repositories.Interfaces;
+using TravelGuide.Core.Services.Interfaces;
+using TravelGuide.Db.Entity;
+using TravelGuide.Utilites;
 
-namespace TravelGuide.Services.Implements
+namespace TravelGuide.Core.Services.Implements
 {
     public class AuthService : IAuthService
     {

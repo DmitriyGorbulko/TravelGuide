@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TravelGuide.Middlewares
+namespace TravelGuide.Api.Middlewares
 {
         public class AuthorizationOperationFilter : IOperationFilter
         {

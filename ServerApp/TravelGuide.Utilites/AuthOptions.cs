@@ -1,4 +1,4 @@
-﻿namespace TravelGuide
+﻿namespace TravelGuide.Utilites
 {
     public static class AuthOptions
     {

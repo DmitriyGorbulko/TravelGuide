@@ -1,6 +1,6 @@
-﻿using TravelGuide.Entity;
+﻿using TravelGuide.Db.Entity;
 
-namespace TravelGuide.Repositories.Interfaces
+namespace TravelGuide.Core.Repositories.Interfaces
 {
     public interface IAuthRepository
     {

@@ -1,9 +1,9 @@
-﻿using TravelGuide.Repositories.Implements;
-using TravelGuide.Repositories.Interfaces;
-using TravelGuide.Services.Implements;
-using TravelGuide.Services.Interfaces;
+﻿using TravelGuide.Core.Repositories.Implements;
+using TravelGuide.Core.Repositories.Interfaces;
+using TravelGuide.Core.Services.Implements;
+using TravelGuide.Core.Services.Interfaces;
 
-namespace TravelGuide
+namespace TravelGuide.Api
 {
     public static class TravelGuideDI
     {

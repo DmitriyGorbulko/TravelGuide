@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TravelGuide.Entity;
+using TravelGuide.Db.Entity;
 
-namespace TravelGuide
+namespace TravelGuide.Db
 {
     public class TravelGuideDbContext : DbContext
     {

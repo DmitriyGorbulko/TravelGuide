@@ -1,6 +1,6 @@
-﻿using TravelGuide.Entity;
+﻿using TravelGuide.Db.Entity;
 
-namespace TravelGuide.Services.Interfaces
+namespace TravelGuide.Core.Services.Interfaces
 {
     public interface IAuthService
     {

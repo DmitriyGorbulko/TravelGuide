@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TravelGuide.Entity
+namespace TravelGuide.Db.Entity
 {
     [Table("user")]
     public class User

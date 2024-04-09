@@ -2,20 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TravelGuide;
+using TravelGuide.Db;
 
 #nullable disable
 
-namespace TravelGuide.Migrations
+namespace TravelGuide2.Migrations
 {
     [DbContext(typeof(TravelGuideDbContext))]
-    [Migration("20240327214153_create-db")]
-    partial class createdb
+    partial class TravelGuideDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

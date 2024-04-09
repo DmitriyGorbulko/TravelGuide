@@ -24,4 +24,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TravelGuide.Core\TravelGuide.Core.csproj" />
+    <ProjectReference Include="..\TravelGuide.Models\TravelGuide.Models.csproj" />
+    <ProjectReference Include="..\TravelGuide.Utilites\TravelGuide.Utilites.csproj" />
+  </ItemGroup>
+
 </Project>

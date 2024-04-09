@@ -6,11 +6,10 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TravelGuide.Entity;
-using TravelGuide.Repositories.Interfaces;
-using TravelGuide.Services.Interfaces;
+using TravelGuide.Db.Entity;
+using TravelGuide.Core.Services.Interfaces;
 
-namespace TravelGuide.Controllers
+namespace TravelGuide.Api.Controllers
 {
     [Route("api/login")]
     [ApiController]

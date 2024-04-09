@@ -4,13 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System;
 using System.Text;
-using TravelGuide.Entity;
-using TravelGuide.Repositories.Interfaces;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
+using TravelGuide.Db.Entity;
+using TravelGuide.Db;
+using TravelGuide.Core.Repositories.Interfaces;
 
-namespace TravelGuide.Repositories.Implements
+namespace TravelGuide.Core.Repositories.Implements
 {
     public class AuthRepository : IAuthRepository
     {

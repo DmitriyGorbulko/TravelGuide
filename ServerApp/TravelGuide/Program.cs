@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using TravelGuide;
-using TravelGuide.Middlewares;
+using TravelGuide.Api;
+using TravelGuide.Api.Middlewares;
 
 internal class Program
 {
