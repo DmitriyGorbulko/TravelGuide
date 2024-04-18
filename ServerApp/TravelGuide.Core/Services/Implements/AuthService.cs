@@ -6,6 +6,7 @@ using System.Text;
 using TravelGuide.Core.Repositories.Interfaces;
 using TravelGuide.Core.Services.Interfaces;
 using TravelGuide.Db.Entity;
+using TravelGuide.Models.Models;
 using TravelGuide.Utilites;
 
 namespace TravelGuide.Core.Services.Implements
@@ -29,12 +30,12 @@ namespace TravelGuide.Core.Services.Implements
             return await _authRepository.SignUp(user);
         }
 
-        public async Task<string> SignIn(string email, string password)
+        public async Task<string> SignIn(UserRequest userRequest)
         {
 
-            if (await VerifyUser(email, password))
+            if (await VerifyUser(userRequest.Email, userRequest.Password))
             {
-                var user = await GetUser(email);
+                var user = await GetUser(userRequest.Email);
                 var token = CreateToken(user);
                 return token;
             }

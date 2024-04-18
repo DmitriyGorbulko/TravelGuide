@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using TravelGuide.Db.Entity;
 using TravelGuide.Core.Services.Interfaces;
+using TravelGuide.Models.Models;
 
 namespace TravelGuide.Api.Controllers
 {
@@ -25,6 +26,7 @@ namespace TravelGuide.Api.Controllers
 
         [Route("/sign_up")]
         [HttpPost]
+        
         public async Task<IActionResult> SignUp(User user)
         {
             return Ok(await _authService.SignUp(user));
@@ -32,9 +34,9 @@ namespace TravelGuide.Api.Controllers
 
         [Route("/sign_in")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(string email, string password)
+        public async Task<IActionResult> SignIn(UserRequest user)
         {
-            return Ok(await _authService.SignIn(email, password));
+            return Ok(await _authService.SignIn(user));
         }
 
         [Route("/test_anonimous")]

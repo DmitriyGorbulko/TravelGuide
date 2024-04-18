@@ -29,11 +29,11 @@ namespace TravelGuide.Api
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TravelGuide.Api v1"); });
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
-
+            app.UseCors("Default");
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -70,12 +70,21 @@ namespace TravelGuide.Api
             });
             services.AddAuthorization();
 
+
             services.AddCors(options =>
             {
                 options.AddPolicy("Default",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost",
+                "http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowedToAllowWildcardSubdomains();
+                    });
             });
             services.AddHttpClient();
+
             // 👇 Configuring the Authorization Service
             services.AddControllers();
 
