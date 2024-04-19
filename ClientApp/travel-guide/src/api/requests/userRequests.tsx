@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { baseUrl } from "./API";
 
 export interface PropsSignIn {
@@ -26,8 +26,8 @@ export const SignUp = (nameRequest : string | undefined, emailRequest: string | 
         });
 }
 
-export const SignIn = (emailRequest: string | undefined , passwordRequest: string | undefined) => {
-    axios.post(`${baseUrl}/sign_in`, {
+export const SignIn = async (emailRequest: string | undefined , passwordRequest: string | undefined) => {
+    await axios.create().post(`${baseUrl}/sign_in`, {
         email: emailRequest,
         password: passwordRequest
 

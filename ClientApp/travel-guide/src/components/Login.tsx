@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Checkbox, Container, CssBaseline, Grid, Link, Text
 import { orange } from '@mui/material/colors';
 import { SignIn } from '../api/requests/userRequests';
 import { observer } from 'mobx-react-lite';
-import tokenStore from '../stores/tokenStore';
+import {tokenStore} from '../stores/tokenStore';
 
 const Login = observer(() => {
     const [email, setEmail] = useState<string>("");
@@ -39,7 +39,7 @@ const Login = observer(() => {
                 <Avatar sx={{ mb: 2, bgcolor: 'secondary.main' }}></Avatar>
                 <TextField sx={{mb: 2}} id='email' value={email} variant='outlined' color='secondary' size='small' onChange={handlerChangeEmail}></TextField>
                 <TextField sx={{mb: 2}} id='password' value={password} variant='outlined' color='secondary' size='small'  onChange={handlerChangePassword}></TextField>
-                <Button variant='outlined' color='secondary' onClick={() => {SignIn(email, password) }}>Войти {jwt}</Button>
+                <Button variant='outlined' color='secondary' onClick={() => {signInStore(email, password) }}>Войти</Button>
                 <Grid container mt={2}>
                     <Grid item xs>
                         <Link href="#" variant="body2">
