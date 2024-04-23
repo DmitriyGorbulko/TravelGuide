@@ -34,9 +34,36 @@ export default function Registrtion() {
         my={1}
       >
         <Typography component="h1" variant="h5">Регистрация</Typography>
-        <TextField sx={{ mb: 2 }} id='email' value={email} variant='outlined' color='secondary' size='small' onChange={handlerChangeEmail}></TextField>
-        <TextField sx={{ mb: 2 }} id='password' value={password} variant='outlined' color='secondary' size='small' onChange={handlerChangePassword}></TextField>
-        <TextField sx={{ mb: 2 }} id='name' value={name} variant='outlined' color='secondary' size='small' onChange={handlerChangeName}></TextField>
+        <TextField 
+          sx={{ mb: 2 }} 
+          id='email' 
+          label="Name" 
+          value={email} 
+          variant='outlined' 
+          color='secondary' 
+          size='small' 
+          onChange={handlerChangeEmail}
+        />
+        <TextField 
+          sx={{ mb: 2 }} 
+          id='password' 
+          label="Email" 
+          value={password} 
+          variant='outlined' 
+          color='secondary' 
+          size='small' 
+          onChange={handlerChangePassword}
+        />
+        <TextField 
+          sx={{ mb: 2 }} 
+          id='name' 
+          label="Password" 
+          value={name} 
+          variant='outlined' 
+          color='secondary' 
+          size='small' 
+          onChange={handlerChangeName}
+        />
         <Button variant='outlined' color='secondary' onClick={() => { SignUp(name, email, password) }}>Создать аккаунт</Button>
       </Grid>
     </Container>

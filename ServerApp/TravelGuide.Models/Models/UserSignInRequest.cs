@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelGuide.Models.Models
 {
-    public class UserRequest
+    public class UserSignInRequest
     {
         public string Email { get; set; }
 

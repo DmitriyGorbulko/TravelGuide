@@ -34,7 +34,7 @@ namespace TravelGuide.Api.Controllers
 
         [Route("/sign_in")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(UserRequest user)
+        public async Task<IActionResult> SignIn(UserSignInRequest user)
         {
             return Ok(await _authService.SignIn(user));
         }

@@ -12,11 +12,11 @@ class TokenStore {
   constructor() {
     makeObservable(this, {
       jwt: observable,
-      signInStore: action
+      SignInStore: action
     });
   }
 
-  signInStore = async (email: string, password: string) => {
+  SignInStore = async (email: string, password: string) => {
 
     const response = await axios.create().post(`${baseUrl}/sign_in`, {
       email: email,

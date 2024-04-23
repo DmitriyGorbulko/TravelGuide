@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { baseUrl } from "./API";
+import { useContext } from "react";
+import { tokenStore } from "../../stores/tokenStore";
 
 export interface PropsSignIn {
     emailRequest: string | undefined;
@@ -12,8 +14,8 @@ export interface PropsSignUp {
     nameRequest : string | undefined;
 }
 
-export const SignUp = (nameRequest : string | undefined, emailRequest: string | undefined , passwordRequest: string | undefined) => {
-    axios.post(`${baseUrl}/sign_up`, {
+export const SignUp = async (nameRequest : string | undefined, emailRequest: string | undefined , passwordRequest: string | undefined) => {
+    await axios.post(`${baseUrl}/sign_up`, {
         name : nameRequest,
         email: emailRequest,
         password: passwordRequest
@@ -38,4 +40,25 @@ export const SignIn = async (emailRequest: string | undefined , passwordRequest:
         .catch(function (error) {
             console.log(error);
         });
+}
+
+export const Test = async () => {
+    const {jwt} = tokenStore;
+
+    try {
+        const test = await axios.get(`${baseUrl}/test_authorize`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        });
+        console.log(test);
+        console.log(test.data);
+    } catch (error) {
+        console.error('Ошибка при выполнении запроса:', error);
+    }
+}
+export const Test1 = async () => {
+    const {jwt} = tokenStore;
+    const test = await axios.create().get(`${baseUrl}/test_anonimous`);
+    console.log(test.data);
 }

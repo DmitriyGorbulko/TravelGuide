@@ -30,7 +30,7 @@ namespace TravelGuide.Core.Services.Implements
             return await _authRepository.SignUp(user);
         }
 
-        public async Task<string> SignIn(UserRequest userRequest)
+        public async Task<string> SignIn(UserSignInRequest userRequest)
         {
 
             if (await VerifyUser(userRequest.Email, userRequest.Password))
