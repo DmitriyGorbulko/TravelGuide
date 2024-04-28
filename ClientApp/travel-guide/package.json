@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@2gis/mapgl": "^1.47.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
@@ -16,12 +17,15 @@
     "@types/node": "^16.18.95",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
+    "2gis-maps": "^3.7.4",
     "axios": "^1.6.8",
+    "leaflet": "^1.9.4",
     "mobx": "^6.12.3",
     "mobx-react": "^9.1.1",
     "mobx-react-lite": "^4.0.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.8",
@@ -51,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.12"
   }
 }

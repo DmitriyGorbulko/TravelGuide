@@ -15,17 +15,25 @@ export interface PropsSignUp {
 }
 
 export const SignUp = async (nameRequest : string | undefined, emailRequest: string | undefined , passwordRequest: string | undefined) => {
-    await axios.post(`${baseUrl}/sign_up`, {
+    var date = await axios.post(`${baseUrl}/sign_up`, {
         name : nameRequest,
         email: emailRequest,
         password: passwordRequest
     })
         .then(function (response) {
             console.log(response);
+            if(response.status == 200){
+                return 200;
+            }
+            else{
+                return 400;
+            }
         })
         .catch(function (error) {
             console.log(error);
+            return 400;
         });
+    return date;
 }
 
 export const SignIn = async (emailRequest: string | undefined , passwordRequest: string | undefined) => {

@@ -4,10 +4,12 @@ import { orange } from '@mui/material/colors';
 import { SignIn, Test, Test1 } from '../api/requests/userRequests';
 import { observer } from 'mobx-react-lite';
 import {tokenStore} from '../stores/tokenStore';
+import { useNavigate } from 'react-router-dom';
 
 const Login = observer(() => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const navigate = useNavigate();
  
     const {jwt, SignInStore} = tokenStore;
 
@@ -17,6 +19,20 @@ const Login = observer(() => {
 
     const handlerChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setPassword(e.target.value);
+    }
+
+    const handleSubmit = (e:React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (e.target.checkValidity()) {
+          alert("Form is valid! Submitting the form...");
+        } else {
+          alert("Form is invalid! Please check the fields...");
+        }
+    };
+
+    const onClickSignIn = () =>{
+        SignInStore(email, password);
+        navigate(`/home`);
     }
 
     return (
@@ -32,14 +48,14 @@ const Login = observer(() => {
                 minHeight='700px'
                 my={1}
             >
-                <Typography component="h1" variant="h5">
+                <Typography mt={5} component="h1" variant="h5">
                     Sign in
                 </Typography>
                 <Avatar sx={{ mb: 2, bgcolor: 'secondary.main' }}></Avatar>
                 <TextField 
                     sx={{mb: 2}} 
                     id='email' 
-                    label="Email" 
+                    label="Email"
                     type="email" 
                     value={email} 
                     variant='outlined' 
@@ -59,15 +75,14 @@ const Login = observer(() => {
                     size='small'  
                     onChange={handlerChangePassword}
                 />
-                <Button variant='outlined' color='secondary' onClick={() => {SignInStore(email, password) }}>Войти</Button>
-                <Button variant='outlined' color='secondary' onClick={() => {Test() }}>test</Button>
-                <Grid container mt={2}>
+                <Button variant='outlined' color='secondary'  onClick={onClickSignIn}>Войти</Button>
+                <Grid container direction={'column'} alignItems={'center'} mt={2} >
                     <Grid item xs>
                         <Link href="#" variant="body2">
                             Забыли пароль?
                         </Link> 
                     </Grid>
-                    <Grid item>
+                    <Grid item mt={1}>
                         <Link href="/sign_up" variant="body2">
                             {"Еще нет аккаунта? Зарегистрируйтесь"}
                         </Link>
