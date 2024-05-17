@@ -9,7 +9,9 @@ namespace TravelGuide.Db
         public DbSet<Way> Ways { get; set; }
         public DbSet<Point> Points { get; set; }
         public DbSet<Place> Places { get; set; }
-        
+        public DbSet<PointOfWay> PointOfWays { get; set; }
+
+
         public TravelGuideDbContext(DbContextOptions options) : base(options)
         {
         }

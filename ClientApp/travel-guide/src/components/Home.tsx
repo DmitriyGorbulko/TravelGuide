@@ -1,103 +1,146 @@
-import { Button } from '@mui/material'
-import { YMaps, Map, Placemark, SearchControl, FullscreenControl, ObjectManager, Clusterer, ZoomControl, TypeSelector, RouteButton } from '@pbe/react-yandex-maps'
-import React, { useRef, useState } from 'react'
-import { Test } from '../api/requests/userRequests'
+
+import { Button, Container, Grid, Input, TextField, TextareaAutosize, Typography } from '@mui/material'
 import { observer } from 'mobx-react-lite'
-import { tokenStore } from '../stores/tokenStore'
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import { load } from '@2gis/mapgl'
+import React, { useEffect, useState } from 'react'
+import { tokenStore } from '../stores/tokenStore';
+import { GetWay, GetWays, Way } from '../api/requests/wayRequesrs';
 
 const Home = observer(() => {
-  const { jwt, SignInStore } = tokenStore;
-  const position = [51.505, -0.09]
-  var src = "https://api-maps.yandex.ru/v3/?apikey=1e536ee2-ed38-46c6-adae-7e9973e63dc7&lang=ru_RU";
+    const [id, setId] = useState<number | null>(null);
+    const [way, setWay] = useState<Way>()
+    const [wayAll, setWayAll] = useState<Way[]>()
 
-  const mapState = { center: [55.76, 37.64], zoom: 10 };
+    const handlerChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setId(value === '' ? null : parseInt(value));
+    }
 
-  const [, setSearchControl] = useState<
-    ymaps.control.SearchControl | undefined
-  >();
+    // useEffect(() =>{
+        
+    // })
 
-  const handleClick = (e: any) => {
-    console.log('Координаты клика:', e.get('coords'));
-  };
+    const handlerRequestApiById = async () => {
+        console.log(id);
+        try {
+            if (id != null) {
+                const response = await GetWay(id);
+                setWay(response);
+            } else {
+                setId(null);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    const handlerRequestWayAll = async () => {
+        try {
+            const response = await GetWays();
+            setWayAll(response);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    const { jwt, SignInStore } = tokenStore;
 
-  return (
-
-
-    
- 
-    <div>
-      {/* yandex */}
-      <YMaps
-    query={{
-      apikey: '5b383675-0c20-4fe2-98a5-4b8a2a9e53f5',
-      load: "Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon",
-    }} >
-        <Map 
-          style={{
-            width: `500px`,
-            height: `500px`
-          }} 
-          
-          defaultState={{ 
-            center: [55.751574, 37.573856], 
-            zoom: 9 
-          }}
-
-          onClick={handleClick}
-        >
-          {/* <SearchControl/> */}
-          <Placemark geometry={[55.751574, 37.573856] } />
-          <FullscreenControl />
-          <ZoomControl options={{ size: 'small', position: { top: 43, right: 10 } }} />
-          <TypeSelector options={{ float: 'right' } as any} />
-          <RouteButton options={{ float: "right" }} />
-        </Map>
-
-      </YMaps>
-      <Button variant='outlined' color='secondary' onClick={() => { Test() }}>test</Button> 
-
-      {/* leaflet */}
-      {/* <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer> */}
-
-
-      {/* yandex */}
-
-      {/* <YMaps>
-    <Map state={mapState}>
-
-      <Placemark
-        geometry={{
-          coordinates: [55.751574, 37.573856]
-        }}
-        properties={{
-          hintContent: 'Собственный значок метки',
-          balloonContent: 'Это красивая метка'
-        }}
-        options={{
-          iconLayout: 'default#image',
-          iconImageHref: 'https://udoba.org/sites/default/files/h5p/content/56145/images/iconImage-63748fc5dad02.png',
-          iconImageSize: [30, 42],
-          iconImageOffset: [-3, -42]
-        }}
-      />
-
-    </Map>
-  </YMaps> */}
-
-    </div>
-  )
+    return (
+        <Container>
+            <Grid
+                container
+                direction="column"
+                display="flex"
+                alignItems="center"
+                wrap='wrap'
+                alignContent='center'
+                minHeight='700px'
+                my={1}
+            >
+                <Input
+                    color='secondary'
+                    onChange={handlerChangeId}
+                />
+                <Button
+                    variant='outlined'
+                    color='secondary'
+                    onClick={handlerRequestApiById}
+                >
+                    Найти
+                </Button>
+                {way == null ? <div>маршруты не найдены</div> :
+                    <div>
+                        <Typography
+                            variant='h3'
+                        >
+                            {way?.title}
+                        </Typography>
+                        <Typography
+                            variant='h5'
+                        >
+                            {way?.description}
+                        </Typography>
+                    </div>}
+                <Button
+                    variant='outlined'
+                    color='secondary'
+                    onClick={handlerRequestWayAll}
+                >
+                    Показать все
+                </Button>
+                {wayAll?.map((item) => (
+                    <div>
+                        <Typography key={item.id}
+                            variant='h3'
+                        >
+                            {item.title}
+                        </Typography>
+                        <Typography
+                            variant='h5'
+                            whiteSpace={'pre-line'}
+                        >
+                            {item.description}
+                        </Typography>
+                        <Button
+                            variant='outlined'
+                            color='secondary'>
+                            Изменить
+                        </Button>
+                    </div>
+                ))}
+            </Grid>
+        </Container>
+    )
 })
 
-export default Home;
+export default Home
+
+
+// const Home = observer(() => {
+//     const [id, setId] = useState<number | null>();
+//     const handlerChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
+//         var value = e.target.value;
+//         setId(value === null ? null : parseInt(value));
+//         console.log(id);
+//     }
+
+//     const {jwt, SignInStore} = tokenStore;
+//     return (
+
+//         <Container>
+//             {jwt ? ( <Grid
+//                 container
+//                 direction="column"
+//                 display="flex"
+//                 // justifyContent="center"
+//                 alignItems="center"
+//                 wrap='wrap'
+//                 alignContent='center'
+//                 minHeight='700px'
+//                 my={1}
+//             >
+//                 <Input
+//                     onChange={handlerChangeId}
+//                 />
+//                 <Button>{jwt}</Button>
+//             </Grid>) : (<div>null</div>)}
+//         </Container>
+//     )
+// })

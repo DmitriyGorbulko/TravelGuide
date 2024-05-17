@@ -12,13 +12,15 @@ export interface PropsSignUp {
     emailRequest: string | undefined;
     passwordRequest: string | undefined;
     nameRequest : string | undefined;
+    roleRequest : string | undefined;
 }
 
 export const SignUp = async (nameRequest : string | undefined, emailRequest: string | undefined , passwordRequest: string | undefined) => {
     var date = await axios.post(`${baseUrl}/sign_up`, {
         name : nameRequest,
         email: emailRequest,
-        password: passwordRequest
+        password: passwordRequest,
+        role: "user"
     })
         .then(function (response) {
             console.log(response);

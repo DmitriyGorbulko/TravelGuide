@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    public class Way
+    public class PointOfWay
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public List<PointOfWay>? PointOfWays { get; }
-    }
 
+        public int PointId { get; set; }
+
+        public Point? Point { get; set; }
+
+        public int WayId { get; set; }
+
+        public Way? Way { get; set; }
+    }
 }

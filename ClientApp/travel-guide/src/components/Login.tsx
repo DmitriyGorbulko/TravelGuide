@@ -75,7 +75,8 @@ const Login = observer(() => {
                     size='small'  
                     onChange={handlerChangePassword}
                 />
-                <Button variant='outlined' color='secondary'  onClick={onClickSignIn}>Войти</Button>
+                <Button variant='outlined' color='secondary'  onClick={onClickSignIn}>Войти</Button> 
+                <Button href='/home'>Home</Button>
                 <Grid container direction={'column'} alignItems={'center'} mt={2} >
                     <Grid item xs>
                         <Link href="#" variant="body2">
