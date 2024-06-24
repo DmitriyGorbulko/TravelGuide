@@ -7,12 +7,12 @@ using TravelGuide.Db.Entity;
 
 namespace TravelGuide.Core.Services.Interfaces
 {
-    public interface IWayService
+    public interface ITypePlaceService
     {
-        Task<Way> Create(Way way);
-        Task<Way> Update(Way way);
+        Task<TypePlace> Create(TypePlace typePlace);
+        Task<TypePlace> Update(TypePlace typePlace);
         Task Delete(int id);
-        Task<IEnumerable<Way>> GetAll();
-        Task<Way> Get(int id);
+        Task<TypePlace> Get(int id);
+        Task<IEnumerable<TypePlace>> GetAll();
     }
 }

@@ -1,34 +1,27 @@
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, Grid, Link, TextField, ThemeProvider, Typography, createTheme, styled } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { GetWay, GetWays } from '../api/requests/wayRequesrs'
+import { Box, Button, Grid,  Paper, styled } from '@mui/material'
 
-export interface Ways{
-    id: number
-    title: string
-    description: string
-}
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
-
-// const [ways, setWays] = useState<Ways>();
-
-// useEffect(()=>{
-
-// })
-
-const handlerClick = () => {
-    GetWay(1);
-}
-
-
- 
 const ListWay = () => {
   return (
-    <div>
-        <Button  variant='outlined' color='secondary'  onClick={handlerClick}>List Way</Button> 
-        <Button variant='outlined' color='secondary'  onClick={GetWays}> Way</Button> 
-    </div>
-    
-  )
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={6} md={5}>
+          {/* <Item>xs=6 md=5</Item>
+          <Item>xs=6 md=5</Item>
+          <Item>xs=6 md=5</Item>
+          <Item>xs=6 md=5</Item> */}
+          <Button> test</Button>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }
 
 export default ListWay;

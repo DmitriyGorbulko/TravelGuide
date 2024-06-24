@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    public class Point
+    public class TagOfPlace
     {
-
         public int Id { get; set; }
 
-        public string X { get; set; }
+        public int PlaceId { get; set; }
+        public Place? Place { get; set; }
 
-        public string Y { get; set; }
-
-        public List<Place>? Places { get; }
-
-        public List<PointOfWay>? PointOfWays { get; set; }
+        public int TagId { get; set; }
+        public Tag? Tag { get; set; }
     }
 }

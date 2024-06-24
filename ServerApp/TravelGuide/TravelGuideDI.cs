@@ -11,16 +11,20 @@ namespace TravelGuide.Api
         {
             return services
                 .AddScoped<IAuthRepository, AuthRepository>()
-                .AddScoped<IPointRepository, PointRepository>()
-                .AddScoped<IWayRepository, WayRepository>();
+                .AddScoped<IWayRepository, WayRepository>()
+                .AddScoped<IPointOfWayRepository, PointOfWayRepository>()
+                .AddScoped<ITypePlaceRepository, TypePlaceRepository>()
+                .AddScoped<IPlaceRepository, PlaceRepository>();
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services) 
         {
             return services
                 .AddScoped<IAuthService, AuthService>()
-                .AddScoped<IPointService, PointService>()
-                .AddScoped<IWayService, WayService>();
+                .AddScoped<IWayService, WayService>()
+                .AddScoped<IPointOfWayService, PointOfWayService>()
+                .AddScoped<ITypePlaceService, TypePlaceService>()
+                .AddScoped<IPlaceService, PlaceService>();
         }
     }
 }

@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    public class PointOfWay
+    public class FavoritePlaceUser
     {
         public int Id { get; set; }
 
-        public double Latitude { get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
 
-        public double Longitude { get; set; }
-
-        public int WayId { get; set; }
-
-        public Way? Way { get; set; }
+        public int PlaceId { get; set; }
+        public Place? Place { get; set; }
     }
 }

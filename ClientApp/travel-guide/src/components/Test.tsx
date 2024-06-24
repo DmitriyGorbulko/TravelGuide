@@ -1,47 +1,46 @@
-import React, { useState } from 'react';
-import { YMaps, Map, Polyline, RouteButton } from '@pbe/react-yandex-maps';
+import React, { useState, useEffect } from 'react';
+import { YMaps, Map, Polyline } from '@pbe/react-yandex-maps';
 
-const RouteMap: React.FC = () => {
-    const [routePoints, setRoutePoints] = useState<number[][]>([]);
-    const [showRouteButton, setShowRouteButton] = useState<boolean>(true);
-    const [routing, setRouting] = useState<boolean>(false);
+const YMap: React.FC = () => {
+  const [mapInstance, setMapInstance] = useState<any>(null);
+  const [route, setRoute] = useState<any>(null);
 
-    const handleMapClick = (e: any) => {
-        const coords = e.get('coords');
-        setRoutePoints(prevPoints => [...prevPoints, coords]);
-        setShowRouteButton(true);
-    };
+  const points: [number, number][] = [
+    [55.751574, 37.573856], // Точка 1
+    [55.751999, 37.615555], // Точка 2
+    [55.757500, 37.615000], // Точка 3
+  ];
 
-    const handleRouteButtonClick = () => {
-        setRouting(true);
-    };
+  useEffect(() => {
+    if (mapInstance && !route) {
+      const ymaps = mapInstance.ymaps;
+      const multiRoute = new ymaps.multiRouter.MultiRoute(
+        {
+          referencePoints: points,
+          params: {
+            routingMode: 'auto',
+          },
+        },
+        {
+          boundsAutoApply: true,
+        }
+      );
 
-    return (
-        <YMaps
-        query={{
-            apikey: '5b383675-0c20-4fe2-98a5-4b8a2a9e53f5',
-            load: "package.full",
-          }}>
-            <Map
-                onClick={handleMapClick}
-                defaultState={{ center: [55.75, 37.57], zoom: 9 }}
-                style={{ width: '100%', height: '400px' }}
-            >
-                {routePoints.length > 1 && (
-                    <Polyline
-                        geometry={routePoints}
-                        options={{
-                            strokeColor: '#000',
-                            strokeWidth: 4,
-                        }}
-                    />
-                )}
-                {showRouteButton && (
-                    <RouteButton options={{ float: 'right' }} onClick={handleRouteButtonClick} />
-                )}
-            </Map>
-        </YMaps>
-    );
+      setRoute(multiRoute);
+      mapInstance.geoObjects.add(multiRoute);
+    }
+  }, [mapInstance, route]);
+
+  return (
+    <YMaps>
+      <Map
+        defaultState={{ center: [55.751574, 37.573856], zoom: 10 }}
+        width="100%"
+        height="400px"
+        instanceRef={(ref) => ref && setMapInstance(ref)}
+      />
+    </YMaps>
+  );
 };
 
-export default RouteMap;
+export default YMap;

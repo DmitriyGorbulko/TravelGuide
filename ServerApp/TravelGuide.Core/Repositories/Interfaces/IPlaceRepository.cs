@@ -7,12 +7,12 @@ using TravelGuide.Db.Entity;
 
 namespace TravelGuide.Core.Repositories.Interfaces
 {
-    public interface IPointRepository
+    public interface IPlaceRepository
     {
-        Task<Point> Create(Point point);
-        Task<Point> Update(Point point);
+        Task<Place> Create(Place place);
+        Task<Place> Update(Place place);
         Task Delete(int id);
-        Task<Point> Get(int id);
-        Task<IEnumerable<Point>> GetAll();
+        Task<Place> Get(int id);
+        Task<IEnumerable<Place>> GetAll();
     }
 }

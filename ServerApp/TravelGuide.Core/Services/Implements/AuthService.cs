@@ -79,7 +79,6 @@ namespace TravelGuide.Core.Services.Implements
         }
 
 
-
         private string CreateToken(User user)
         {
             const int ExpirationMinutes = 365;
@@ -101,5 +100,10 @@ namespace TravelGuide.Core.Services.Implements
 
         public SymmetricSecurityKey GetSymmetricSecurityKey() =>
             new(Encoding.UTF8.GetBytes(AuthOptions.KEY));
+
+        public async Task<User> GetById(int id)
+        {
+            return await _authRepository.GetById(id);
+        }
     }
 }

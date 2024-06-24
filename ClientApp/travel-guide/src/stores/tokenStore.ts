@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
+import { action, makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
 import { User } from './../api/models/User';
 import { SignIn } from './../api/requests/userRequests';
 import { stringify } from 'querystring'
@@ -22,11 +22,15 @@ class TokenStore {
       email: email,
       password: password
 
-  });
-    this.jwt = response.data;
+  })
+  runInAction(() => 
+    {
+      this.jwt = response.data;
+    });
     console.log(response);
-    console.log(this.jwt);
+    console.log(this.jwt);   
   }
+
 }
 
 export const tokenStore =  new TokenStore();

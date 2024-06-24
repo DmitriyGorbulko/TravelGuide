@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    public class Place
+    public class Tag
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
 
-        public int TypePlaceId { get; set; }
-        public TypePlace? TypePlace { get; set; } 
+        public int PlaceId { get; set; }
+        public Place? Place { get; set; }
 
-        public double Latitude { get; set; }
-
-        public double Longitude { get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
     }
 }

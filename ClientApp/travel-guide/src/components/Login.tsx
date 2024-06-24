@@ -30,9 +30,8 @@ const Login = observer(() => {
         }
     };
 
-    const onClickSignIn = () =>{
-        SignInStore(email, password);
-        navigate(`/home`);
+    const onClickSignIn = async () =>{
+        await SignInStore(email, password).then(()=> navigate(`/`));
     }
 
     return (
@@ -76,7 +75,6 @@ const Login = observer(() => {
                     onChange={handlerChangePassword}
                 />
                 <Button variant='outlined' color='secondary'  onClick={onClickSignIn}>Войти</Button> 
-                <Button href='/home'>Home</Button>
                 <Grid container direction={'column'} alignItems={'center'} mt={2} >
                     <Grid item xs>
                         <Link href="#" variant="body2">

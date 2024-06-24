@@ -23,9 +23,9 @@ namespace TravelGuide.Core.Services.Implements
             return await _wayRepository.Creare(way);
         }
 
-        public Task Delete(Way way)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _wayRepository.Delete(id);
         }
 
         public async Task<Way> Get(int id)

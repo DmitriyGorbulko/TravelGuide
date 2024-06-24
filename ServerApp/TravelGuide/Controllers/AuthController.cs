@@ -53,12 +53,11 @@ namespace TravelGuide.Api.Controllers
         {
             return Ok("good");
         }
-
-        /*[Route("/test_jwt")]
+        [Route("/get_user_by_id")]
         [HttpGet]
-        public async Task<IActionResult> TestJwt(string jwt)
+        public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _authService.VeritifyJwt(jwt));
-        }*/
+            return Ok(await _authService.GetById(id));
+        }
     }
 }

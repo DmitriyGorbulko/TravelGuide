@@ -9,5 +9,6 @@ namespace TravelGuide.Core.Services.Interfaces
         Task<string> SignIn(UserSignInRequest user);
         Task<User?> GetUser(string email);
         Task<bool> VerifyUser(string email, string password);
+        Task<User> GetById(int id);
     }
 }

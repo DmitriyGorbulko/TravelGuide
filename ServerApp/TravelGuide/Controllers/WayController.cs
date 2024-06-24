@@ -42,5 +42,12 @@ namespace TravelGuide.Api.Controllers
         {
             return Ok(await _wayService.GetAll());
         }
+
+        [HttpDelete]
+        [Route("/remove_way")]
+        public async Task Delete(int id)
+        {
+            await _wayService.Delete(id);
+        }
     }
 }

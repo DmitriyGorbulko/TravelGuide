@@ -8,11 +8,17 @@ export interface Way {
     description: string,
 }
 
+export interface Point{
+    id: number;
+    x: number;
+    y: number;
+}
+
 
 export const GetWay = async (id: number | null): Promise<Way> => {
     try {
         const response = await axios.get(`${baseUrl}/get_way?id=${id}`);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -23,10 +29,22 @@ export const GetWay = async (id: number | null): Promise<Way> => {
 export const GetWays = async (): Promise<Way[]> => {
     try {
         const response = await axios.get(`${baseUrl}/get_ways`)
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
         throw error;
     };
 }
+
+// export const GetPointsByWay = async(): Promise<Point[]> => {
+//     let Points = GetPoints();
+//     try {
+//         const response = await axios.get(`${baseUrl}/get_points`)
+//         // console.log(response.data);
+//         return response.data;
+//     } catch (error) {
+//         console.log(error);
+//         throw error;
+//     };
+// } 
