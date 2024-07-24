@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    [Table("way")]
-    public class Way
+    [Table("tag")]
+    public class Tag
     {
         [Column("id")]
         public int Id { get; set; }
@@ -20,11 +19,16 @@ namespace TravelGuide.Db.Entity
         [Column("description")]
         public string Description { get; set; }
 
+        [Column("is_private")]
+        public bool IsPrivate { get; set; }
+
         [Column("user_id")]
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public List<PointOfWay>? PointOfWays { get; }
-    }
+        public List<FavoriteTag>? FavoriteTag { get; }
 
+        public List<TagOfPlace>? TagOfPlaces { get; }
+
+    }
 }

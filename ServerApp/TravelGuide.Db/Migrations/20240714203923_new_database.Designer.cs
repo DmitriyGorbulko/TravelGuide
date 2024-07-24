@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TravelGuide.Db;
 
 #nullable disable
 
-namespace TravelGuide2.Migrations
+namespace TravelGuide.Db.Migrations
 {
     [DbContext(typeof(TravelGuideDbContext))]
-    partial class TravelGuideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714203923_new_database")]
+    partial class new_database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,13 +279,7 @@ namespace TravelGuide2.Migrations
                         .HasColumnType("text")
                         .HasColumnName("title");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("way");
                 });
@@ -378,17 +374,6 @@ namespace TravelGuide2.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("TravelGuide.Db.Entity.Way", b =>
-                {
-                    b.HasOne("TravelGuide.Db.Entity.User", "User")
-                        .WithMany("Ways")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TravelGuide.Db.Entity.Place", b =>
                 {
                     b.Navigation("Reviews");
@@ -415,8 +400,6 @@ namespace TravelGuide2.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Tags");
-
-                    b.Navigation("Ways");
                 });
 
             modelBuilder.Entity("TravelGuide.Db.Entity.Way", b =>

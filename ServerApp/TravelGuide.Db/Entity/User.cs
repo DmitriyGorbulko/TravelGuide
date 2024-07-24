@@ -19,6 +19,15 @@ namespace TravelGuide.Db.Entity
         [Column("password")]
         public string? Password { get; set; }
 
+        [Column("role")]
         public string? Role { get; set; }
-}
+
+        public List<FavoriteTag>? FavoriteTags { get; }
+
+        public List<Review>? Reviews { get; }
+
+        public List<Tag>? Tags { get; }
+
+        public List<Way>? Ways { get; }
+    }
 }
