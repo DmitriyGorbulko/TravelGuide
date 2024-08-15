@@ -5,3 +5,22 @@
   width: 207px;
   margin: 20% auto;
 }
+
+.divWayCard{
+  border: 3px solid black;
+  width: 50%
+}
+
+.linkCardWay{
+  text-decoration: none;
+  
+}
+.divMapCreateWay{
+  position: absolute;
+  right: 0px;
+}
+.divFormCreateWay{
+  position: absolute;
+  left: 0px;
+  /* background-color: aqua; */
+}

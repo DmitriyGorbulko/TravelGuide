@@ -6,6 +6,7 @@ export interface Way {
     id: number,
     title: string,
     description: string,
+    userId: number
 }
 
 
@@ -29,4 +30,19 @@ export const GetWays = async (): Promise<Way[]> => {
         console.log(error);
         throw error;
     };
+}
+
+
+export const CreateWay = async(titleRequest : string, descriptionRequest : string) => {
+    await axios.create().post(`${baseUrl}/create_way`, {
+        title: titleRequest,
+        description: descriptionRequest,
+        userUd: 1
+    })
+        .then(function(response){
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
 }

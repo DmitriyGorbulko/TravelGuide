@@ -39,7 +39,7 @@ export const SignUp = async (nameRequest : string | undefined, emailRequest: str
 }
 
 export const SignIn = async (emailRequest: string | undefined , passwordRequest: string | undefined) => {
-    await axios.create().post(`${baseUrl}/sign_in`, {
+    await axios.create().post(`${baseUrl}/create_way`, {
         email: emailRequest,
         password: passwordRequest
 
