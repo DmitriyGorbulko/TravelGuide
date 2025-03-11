@@ -12,8 +12,8 @@ using TravelGuide.Db;
 namespace TravelGuide.Db.Migrations
 {
     [DbContext(typeof(TravelGuideDbContext))]
-    [Migration("20240714203923_new_database")]
-    partial class new_database
+    [Migration("20250219171240_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,16 +59,6 @@ namespace TravelGuide.Db.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Latitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("latitude");
-
-                    b.Property<string>("Longitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("longitude");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text")
@@ -94,21 +84,17 @@ namespace TravelGuide.Db.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Latitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("latitude");
-
-                    b.Property<string>("Longitude")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("longitude");
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("place_id");
 
                     b.Property<int>("WayId")
                         .HasColumnType("integer")
                         .HasColumnName("way_id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlaceId");
 
                     b.HasIndex("WayId");
 
@@ -279,9 +265,139 @@ namespace TravelGuide.Db.Migrations
                         .HasColumnType("text")
                         .HasColumnName("title");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("way");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfAttraction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<string>("Town")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("town");
+
+                    b.Property<int>("WayId")
+                        .HasColumnType("integer")
+                        .HasColumnName("way_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WayId");
+
+                    b.ToTable("way_of_atraction");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfGuide", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.Property<string>("TelegramUsername")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("telegram_username");
+
+                    b.Property<string>("Town")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("town");
+
+                    b.Property<int>("WayId")
+                        .HasColumnType("integer")
+                        .HasColumnName("way_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WayId");
+
+                    b.ToTable("way_of_guide");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfTour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<string>("Town")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("town");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.Property<int>("WayId")
+                        .HasColumnType("integer")
+                        .HasColumnName("way_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WayId");
+
+                    b.ToTable("way_of_tour");
                 });
 
             modelBuilder.Entity("TravelGuide.Db.Entity.FavoriteTag", b =>
@@ -316,11 +432,19 @@ namespace TravelGuide.Db.Migrations
 
             modelBuilder.Entity("TravelGuide.Db.Entity.PointOfWay", b =>
                 {
+                    b.HasOne("TravelGuide.Db.Entity.Place", "Place")
+                        .WithMany()
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TravelGuide.Db.Entity.Way", "Way")
                         .WithMany("PointOfWays")
                         .HasForeignKey("WayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Place");
 
                     b.Navigation("Way");
                 });
@@ -374,6 +498,50 @@ namespace TravelGuide.Db.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("TravelGuide.Db.Entity.Way", b =>
+                {
+                    b.HasOne("TravelGuide.Db.Entity.User", "User")
+                        .WithMany("Ways")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfAttraction", b =>
+                {
+                    b.HasOne("TravelGuide.Db.Entity.Way", "Way")
+                        .WithMany("WayOfAttractions")
+                        .HasForeignKey("WayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Way");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfGuide", b =>
+                {
+                    b.HasOne("TravelGuide.Db.Entity.Way", "Way")
+                        .WithMany("WayOfGuides")
+                        .HasForeignKey("WayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Way");
+                });
+
+            modelBuilder.Entity("TravelGuide.Db.Entity.WayOfTour", b =>
+                {
+                    b.HasOne("TravelGuide.Db.Entity.Way", "Way")
+                        .WithMany("WayOfTours")
+                        .HasForeignKey("WayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Way");
+                });
+
             modelBuilder.Entity("TravelGuide.Db.Entity.Place", b =>
                 {
                     b.Navigation("Reviews");
@@ -400,11 +568,19 @@ namespace TravelGuide.Db.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("Tags");
+
+                    b.Navigation("Ways");
                 });
 
             modelBuilder.Entity("TravelGuide.Db.Entity.Way", b =>
                 {
                     b.Navigation("PointOfWays");
+
+                    b.Navigation("WayOfAttractions");
+
+                    b.Navigation("WayOfGuides");
+
+                    b.Navigation("WayOfTours");
                 });
 #pragma warning restore 612, 618
         }

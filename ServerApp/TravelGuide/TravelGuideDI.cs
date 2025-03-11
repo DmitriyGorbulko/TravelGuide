@@ -18,7 +18,10 @@ namespace TravelGuide.Api
                 .AddScoped<ITagOfPlaceRepository, TagOfPlaceRepository>()
                 .AddScoped<ITagRepository, TagRepository>()
                 .AddScoped<ITypePlaceRepository, TypePlaceRepository>()
-                .AddScoped<IWayRepository, WayRepository>();
+                .AddScoped<IWayRepository, WayRepository>()
+                .AddScoped<IWayOfAttractionRepository, WayOfAttractionRepository>()
+                .AddScoped<IWayOfGuideRepository, WayOfGuideRepository>()
+                .AddScoped<IWayOfTourRepository, WayOfTourRepository>();
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services) 
@@ -28,7 +31,10 @@ namespace TravelGuide.Api
                 .AddScoped<IPlaceService, PlaceService>()
                 .AddScoped<IPointOfWayService, PointOfWayService>()
                 .AddScoped<ITypePlaceService, TypePlaceService>()
-                .AddScoped<IWayService, WayService>();
+                .AddScoped<IWayService, WayService>()
+                .AddScoped<IWayOfAttractionService, WayOfAttractionService>()
+                .AddScoped<IWayOfGuideService, WayOfGuideService>()
+                .AddScoped<IWayOfTourService, WayOfTourService>();
         }
     }
 }

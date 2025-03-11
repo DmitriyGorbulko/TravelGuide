@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
 {
-    [Table("way")]
-    public class Way
+    [Table("way_of_atraction")]
+    public class WayOfAttraction
     {
+        [Key]
         [Column("id")]
         public int Id { get; set; }
+
+        [Column("way_id")]
+        public int WayId { get; set; }
+
+        public Way? Way { get; set; }
 
         [Column("title")]
         public string Title { get; set; }
@@ -20,16 +26,7 @@ namespace TravelGuide.Db.Entity
         [Column("description")]
         public string Description { get; set; }
 
-        [Column("user_id")]
-        public int UserId { get; set; }
-        public User? User { get; set; }
-
-        public List<PointOfWay>? PointOfWays { get; }
-        public List<WayOfAttraction>? WayOfAttractions { get; }
-        public List<WayOfGuide>? WayOfGuides { get; }
-        public List<WayOfTour>? WayOfTours { get; }
-
-
+        [Column("town")]
+        public string Town { get; set; }
     }
-
 }

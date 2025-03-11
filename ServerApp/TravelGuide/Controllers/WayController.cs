@@ -42,5 +42,12 @@ namespace TravelGuide.Api.Controllers
         {
             return Ok(await _wayService.GetAll());
         }
+
+        [HttpGet]
+        [Route("/get_ways_by_user_id")]
+        public async Task<ActionResult<IEnumerable<Way>>> GetByUserId(int id)
+        {
+            return Ok(await _wayService.GetByUserId(id));
+        }
     }
 }

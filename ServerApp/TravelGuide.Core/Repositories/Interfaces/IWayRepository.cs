@@ -14,5 +14,6 @@ namespace TravelGuide.Core.Repositories.Interfaces
         Task Delete(int id);
         Task<IEnumerable<Way>> GetAll();
         Task<Way> Get(int id);
+        Task<IEnumerable<Way>> GetByUserId(int id);
     }
 }

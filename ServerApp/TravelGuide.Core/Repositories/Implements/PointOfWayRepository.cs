@@ -40,6 +40,11 @@ namespace TravelGuide.Core.Repositories.Implements
         {
             return await _context.PointOfWays.ToListAsync();
         }
+
+        public async Task<IEnumerable<PointOfWay>> GetByWayId(int wayId)
+        {
+            return await _context.PointOfWays.Where(p => p.WayId == wayId).ToListAsync();
+        }
 #warning
         public async Task<PointOfWay> Update(PointOfWay pointOfWay)
         {
@@ -48,6 +53,16 @@ namespace TravelGuide.Core.Repositories.Implements
             pointOfWayUpdate.WayId = pointOfWay.WayId;*/
             await _context.SaveChangesAsync();
             return pointOfWayUpdate;
+        }
+
+        public async Task<IEnumerable<PointOfWay>> GetTownsFromWay(int wayId)
+        {
+            return await _context.PointOfWays
+                .Include(p => p.Place)
+                .ThenInclude(p => p.TypePlace)
+                .Where(p => p.WayId == wayId)
+                .Where(p => p.Place.TypePlace.Title == "Город")
+                .ToListAsync();
         }
     }
 }

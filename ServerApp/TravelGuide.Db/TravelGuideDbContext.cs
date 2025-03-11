@@ -14,6 +14,10 @@ namespace TravelGuide.Db
         public DbSet<TypePlace> TypePlaces { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Way> Ways { get; set; }
+        public DbSet<WayOfAttraction> WayOfAttractions { get; set; }
+        public DbSet<WayOfGuide> WayOfGuides { get; set; }
+        public DbSet<WayOfTour> WayOfTours { get; set; }
+
 
 
         public TravelGuideDbContext(DbContextOptions options) : base(options)

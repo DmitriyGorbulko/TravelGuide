@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace TravelGuide.Db.Entity
@@ -16,15 +17,11 @@ namespace TravelGuide.Db.Entity
         [Column("title")]
         public string Title { get; set; }
 
-        [Column("latitude")]
-        public string Latitude { get; set; }
-
-        [Column("longitude")]
-        public string Longitude { get; set; }
-
         [Column("type_place_id")]
         public int TypePlaceId { get; set; }
-        public TypePlace TypePlace { get; set; }
+
+        [JsonIgnore]
+        public TypePlace? TypePlace { get; set; }
 
         public List<Review>? Reviews { get; }
 

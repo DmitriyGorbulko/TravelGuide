@@ -13,15 +13,14 @@ namespace TravelGuide.Db.Entity
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("latitude")]
-        public string Latitude { get; set; }
-
-        [Column("longitude")]
-        public string Longitude { get; set; }
-
         [Column("way_id")]
         public int WayId { get; set; }
 
         public Way? Way { get; set; }
+
+        [Column("place_id")]
+        public int PlaceId { get; set; }
+
+        public Place? Place { get; set; }
     }
 }

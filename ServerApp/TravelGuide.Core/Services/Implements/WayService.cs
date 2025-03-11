@@ -38,6 +38,12 @@ namespace TravelGuide.Core.Services.Implements
             return await _wayRepository.GetAll();
         }
 
+        public async Task<IEnumerable<Way>> GetByUserId(int id)
+        {
+            var wayList = await _wayRepository.GetByUserId(id);
+            return wayList;
+        }
+
         public async Task<Way> Update(Way way)
         {
             return await _wayRepository.Update(way);

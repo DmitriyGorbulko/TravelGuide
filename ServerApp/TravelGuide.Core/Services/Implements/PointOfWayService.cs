@@ -38,9 +38,22 @@ namespace TravelGuide.Core.Services.Implements
             return await _pointOfWayRepository.GetAll();
         }
 
+        public async Task<IEnumerable<PointOfWay>> GetByWayId(int wayId)
+        {
+            return await _pointOfWayRepository.GetByWayId(wayId);
+        }
+
         public async Task<PointOfWay> Update(PointOfWay pointOfWay)
         {
             return await _pointOfWayRepository.Update(pointOfWay);
         }
+
+        public async Task<IEnumerable<string>> GetTownsFromWay(int wayId)
+        {
+            var points = await _pointOfWayRepository.GetTownsFromWay(wayId);
+
+            return points.Select(p => p.Place.Title).Distinct();
+        }
+
     }
 }

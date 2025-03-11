@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TravelGuide.Api.Middlewares;
 using TravelGuide.Db;
+using TravelGuide.Models;
+using TravelGuide.Models.Models;
 using TravelGuide.Utilites;
 
 namespace TravelGuide.Api
@@ -83,7 +85,19 @@ namespace TravelGuide.Api
             .SetIsOriginAllowedToAllowWildcardSubdomains();
                     });
             });
-            services.AddHttpClient();
+            services.AddHttpClient<AttractionClient>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:8080"); // Укажите базовый URL для API
+            });
+            services.AddHttpClient<GuideClient>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:8080");
+            });
+            services.AddHttpClient<TourClient>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:8080");
+            });
+
 
             // 👇 Configuring the Authorization Service
             services.AddControllers();

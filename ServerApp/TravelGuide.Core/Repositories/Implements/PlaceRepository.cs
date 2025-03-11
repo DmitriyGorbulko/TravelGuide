@@ -41,7 +41,7 @@ namespace TravelGuide.Core.Repositories.Implements
             return await _context.Places.ToListAsync();
         }
 
-#warning
+
         public async Task<Place> Update(Place place)
         {
             var placeUpdate = await _context.Places.FindAsync(place.Id);

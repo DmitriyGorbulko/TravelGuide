@@ -47,21 +47,25 @@ const HomePage: React.FC = () => {
                     Показать все
                 </Button> */}
         {wayAll?.map((item) => (
-          <div>
+          <div className='divAllWays'>
             <Typography key={item.id}
               variant='h3'
+              sx={{ mb: 2 }}
             >
               {item.title}
             </Typography>
             <Typography
               variant='h5'
               whiteSpace={'pre-line'}
+              sx={{ mb: 2 }}
             >
               {item.description}
             </Typography>
             <Button
               variant='outlined'
-              color='secondary'>
+              color='secondary'
+              sx={{ mb: 2 }}
+              >
               Изменить
             </Button>
           </div>

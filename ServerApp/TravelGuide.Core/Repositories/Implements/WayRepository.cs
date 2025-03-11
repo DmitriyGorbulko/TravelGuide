@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using Microsoft.EntityFrameworkCore;
 using TravelGuide.Core.Repositories.Interfaces;
 using TravelGuide.Db;
 using TravelGuide.Db.Entity;
@@ -12,17 +9,17 @@ namespace TravelGuide.Core.Repositories.Implements
 {
     public class WayRepository : IWayRepository
     {
-        private readonly TravelGuideDbContext _contex;
+        private readonly TravelGuideDbContext _context;
 
-        public WayRepository(TravelGuideDbContext contex)
+        public WayRepository(TravelGuideDbContext context)
         {
-            _contex = contex;
+            _context = context;
         }
 
         public async Task<Way> Creare(Way way)
         {
-            await _contex.Ways.AddAsync(way);
-            await _contex.SaveChangesAsync();
+            await _context.Ways.AddAsync(way);
+            await _context.SaveChangesAsync();
             return way;
         }
 
@@ -33,12 +30,20 @@ namespace TravelGuide.Core.Repositories.Implements
 
         public async Task<Way> Get(int id)
         {
-            return await _contex.Ways.FindAsync(id);
+            return await _context.Ways.FindAsync(id);
         }
 
         public async Task<IEnumerable<Way>> GetAll()
         {
-            return await _contex.Ways.ToListAsync();
+
+            return await _context.Ways.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Way>> GetByUserId(int id)
+        {
+            var wayList = _context.Ways;
+            var response = await wayList.Where(x => x.UserId == id).ToListAsync();
+            return response;
         }
 
         public async Task<Way> Update(Way way)
@@ -46,7 +51,7 @@ namespace TravelGuide.Core.Repositories.Implements
             var wayUpdate = await Get(way.Id);
             wayUpdate.Title = way.Title;
             wayUpdate.Description = way.Description;
-            await _contex.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return wayUpdate;
         }
     }

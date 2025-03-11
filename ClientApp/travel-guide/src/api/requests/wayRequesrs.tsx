@@ -37,7 +37,7 @@ export const CreateWay = async(titleRequest : string, descriptionRequest : strin
     await axios.create().post(`${baseUrl}/create_way`, {
         title: titleRequest,
         description: descriptionRequest,
-        userUd: 1
+        userUd: 1 /*!!!!!!!!!!!!!!! */
     })
         .then(function(response){
             console.log(response);

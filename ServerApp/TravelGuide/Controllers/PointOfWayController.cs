@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelGuide.Core.Services.Implements;
+using TravelGuide.Core.Services.Interfaces;
 using TravelGuide.Db.Entity;
 
 namespace TravelGuide.Api.Controllers
@@ -8,9 +9,9 @@ namespace TravelGuide.Api.Controllers
     [ApiController]
     public class PointOfWayController : ControllerBase
     {
-        private readonly PointOfWayService _pointOfWayService;
+        private readonly IPointOfWayService _pointOfWayService;
 
-        public PointOfWayController(PointOfWayService pointOfWayService)
+        public PointOfWayController(IPointOfWayService pointOfWayService)
         {
             _pointOfWayService = pointOfWayService;
         }
@@ -42,5 +43,22 @@ namespace TravelGuide.Api.Controllers
         {
             return Ok(await _pointOfWayService.GetAll());
         }
+
+        [Route("/get_by_way_id")]
+        [HttpGet]
+        public async Task<ActionResult<PointOfWay>> GetByWayId(int wayId)
+        {
+            return Ok(await _pointOfWayService.GetByWayId(wayId));
+        }
+
+
+        // Если хотите передавать тип места через параметр:
+        [Route("/get_points_by_type_place")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<string>>> GetTownsFromWay(int wayId)
+        {
+            return Ok(await _pointOfWayService.GetTownsFromWay(wayId));
+        }
+
     }
 }
